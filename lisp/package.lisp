@@ -17,6 +17,7 @@
            #:audio-stream #:sound
            #:music #:music-looping
            #:camera-2d #:make-camera-2d #:camera-2d-offset #:camera-2d-target #:get-world-to-screen-2d
+           #:camera-2d-rotation #:camera-2d-zoom
            #:keyboard-key #:gamepad-button)
   ;; --- Functions --- ;;
   (:export #:init-window #:close-window
@@ -31,6 +32,9 @@
            #:load-font #:load-font-ex #:unload-font #:is-font-valid #:get-font-default
            #:is-key-pressed #:is-key-down
            #:is-gamepad-button-pressed #:is-gamepad-button-down #:get-gamepad-name #:is-gamepad-available #:get-gamepad-button-pressed
+           #:get-mouse-wheel-move
+           #:is-mouse-button-pressed #:is-mouse-button-released
+           #:is-mouse-button-down #:is-mouse-button-down
            #:get-gamepad-axis-count #:get-gamepad-axis-movement
            #:check-collision-recs #:check-collision-point-rec
            #:get-frame-time)

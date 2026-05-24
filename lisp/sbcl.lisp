@@ -472,6 +472,14 @@ every character you intend to print in your game."
          (camera (@camera-2d :pointer pointer)))
     (tg:finalize camera (lambda () (free-alien pointer)))))
 
+(defmacro camera-2d-rotation (camera)
+  "The ROTATION slot of a `Camera2D'."
+  `(slot (camera-2d-pointer ,camera) 'rotation))
+
+(defmacro camera-2d-zoom (camera)
+  "The ZOOM slot of a `Camera2D'."
+  `(slot (camera-2d-pointer ,camera) 'zoom))
+
 ;; NOTE: 2025-03-04 So far these are the only functions like this, where we need
 ;; to wrap a pointer but NOT have it cleaned up by `trivial-garbage'. That is
 ;; because we're only borrowing it in order to do some updates to the underlying
@@ -498,6 +506,27 @@ every character you intend to print in your game."
                                               (camera-2d-pointer camera)))
          (vector (@vector2 :pointer pointer)))
     (tg:finalize vector (lambda () (free-alien pointer)))))
+
+;; --- Mouse --- ;;
+
+(define-alien-routine ("IsMouseButtonPressed" is-mouse-button-pressed) (boolean 8)
+  "Check if a mouse button has been pressed once."
+  (button int))
+
+(define-alien-routine ("IsMouseButtonDown" is-mouse-button-down) (boolean 8)
+  "Check if a mouse button is being pressed."
+  (button int))
+
+(define-alien-routine ("IsMouseButtonReleased" is-mouse-button-released) (boolean 8)
+  "Check if a mouse button has been released once."
+  (button int))
+
+(define-alien-routine ("IsMouseButtonUp" is-mouse-button-up) (boolean 8)
+  "Check if a mouse button is NOT being pressed."
+  (button int))
+
+(define-alien-routine ("GetMouseWheelMove" get-mouse-wheel-move) float
+  "Get mouse wheel movement for X or Y, whichever is larger.")
 
 ;; --- Keyboard and Gamepad --- ;;
 
