@@ -100,6 +100,7 @@ be compiled with `.so' files found in one location, but run with ones from anoth
     (:tab   258)
     (:enter 257)
     (:shift 340)
+    ((:esc :escape) 256)
     ;; --- Numbers --- ;;
     (:zero  48)
     (:one   49)
