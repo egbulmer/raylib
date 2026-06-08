@@ -194,6 +194,12 @@ void _DrawRectangle(int posX, int posY, int width, int height, Color *color) {
   DrawRectangle(posX, posY, width, height, stack);
 }
 
+void _DrawRectangleLinesEx(Rectangle *rec, float lineThick, Color *color) {
+  Rectangle rec_stack = *rec;
+  Color color_stack = *color;
+  DrawRectangleLinesEx(rec_stack, lineThick, color_stack);
+}
+
 void _DrawLine(int startPosX, int startPosY, int endPosX, int endPosY,
                Color *color) {
   Color stack = *color;

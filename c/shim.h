@@ -71,6 +71,8 @@ void _DrawTextEx(Font *font, const char *text, Vector2 *position,
 
 void _DrawRectangle(int posX, int posY, int width, int height, Color *color);
 
+void _DrawRectangleLinesEx(Rectangle *rec, float lineThick, Color *color);
+
 void _DrawLine(int startPosX, int startPosY, int endPosX, int endPosY,
                Color *color);
 

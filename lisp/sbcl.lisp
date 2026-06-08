@@ -641,6 +641,15 @@ every character you intend to print in your game."
 (defun draw-rectangle (pos-x pos-y width height color)
   (draw-rectangle-raw pos-x pos-y width height (color-pointer color)))
 
+(define-alien-routine ("_DrawRectangleLinesEx" draw-rectangle-lines-ex-raw) void
+  (rec (* (struct rectangle-raw)))
+  (line-thick single-float)
+  (color (* (struct color-raw))))
+
+(declaim (ftype (function (rectangle real color) null) draw-rectangle-lines-ex))
+(defun draw-rectangle-lines-ex (rectangle thickness color)
+  (draw-rectangle-lines-ex-raw (rectangle-pointer rectangle) thickness (color-pointer color)))
+
 (define-alien-routine ("_DrawLine" draw-line-raw) void
   (start-pos-x int)
   (start-pos-y int)
