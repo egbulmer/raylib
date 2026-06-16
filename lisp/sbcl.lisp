@@ -312,6 +312,16 @@
 
 (define-alien-routine ("EndTextureMode" end-texture-mode) void)
 
+(declaim (ftype (function (render-texture) texture) render-texture-texture))
+(defun render-texture-texture (texture)
+  (@texture :pointer (sap-alien (alien-sap (slot (render-texture-pointer texture) 'texture))
+                                (* (struct texture-raw)))))
+
+(declaim (ftype (function (render-texture) texture) render-texture-depth))
+(defun render-texture-depth (texture)
+  (@texture :pointer (sap-alien (alien-sap (slot (render-texture-pointer texture) 'depth))
+                                (* (struct texture-raw)))))
+
 ;; --- Fonts --- ;;
 
 (define-alien-type nil
