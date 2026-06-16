@@ -91,6 +91,31 @@ void _DrawTextureRec(Texture2D *texture, Rectangle *source, Vector2 *position,
   DrawTextureRec(t, r, v, c);
 }
 
+// --- Render Textures --- ///
+
+RenderTexture2D *_LoadRenderTexture(int width, int height) {
+  RenderTexture2D *heap = malloc(sizeof(RenderTexture2D));
+  RenderTexture2D stack = LoadRenderTexture(width, height);
+  *heap = stack;
+
+  return heap;
+}
+
+void _UnloadRenderTexture(RenderTexture2D *target) {
+  RenderTexture2D stack = *target;
+  UnloadRenderTexture(stack);
+}
+
+bool _IsRenderTextureValid(RenderTexture2D *target) {
+  RenderTexture2D stack = *target;
+  return IsRenderTextureValid(stack);
+}
+
+void _BeginTextureMode(RenderTexture2D *target) {
+  RenderTexture2D stack = *target;
+  BeginTextureMode(stack);
+}
+
 // --- Sounds and Music --- //
 
 Sound *_LoadSound(const char *fileName) {

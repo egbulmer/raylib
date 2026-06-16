@@ -34,6 +34,16 @@ void _DrawTextureV(Texture2D *texture, Vector2 *position, Color *tint);
 void _DrawTextureRec(Texture2D *texture, Rectangle *source, Vector2 *position,
                      Color *tint);
 
+// --- Render Textures --- ///
+
+RenderTexture2D *_LoadRenderTexture(int width, int height);
+
+void _UnloadRenderTexture(RenderTexture2D *target);
+
+bool _IsRenderTextureValid(RenderTexture2D *target);
+
+void _BeginTextureMode(RenderTexture2D *target);
+
 // --- Sounds and Music --- //
 
 Sound *_LoadSound(const char *fileName);

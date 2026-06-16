@@ -263,6 +263,55 @@
                         (vector2-pointer position)
                         (color-pointer tint)))
 
+;; --- Render Textures --- ;;
+
+(define-alien-type nil
+    (struct render-texture-raw
+            (id unsigned-int)
+            (texture (struct texture-raw))
+            (depth (struct texture-raw))))
+
+(defstruct (render-texture (:constructor @render-texture))
+  (pointer nil :type alien))
+
+(defmethod print-object ((texture render-texture) stream)
+  (print-unreadable-object (texture stream :type t :identity t)
+    (format stream ":ID ~a :TEXTURE ~a :DEPTH ~a"
+            (slot (render-texture-pointer texture) 'id)
+            (slot (render-texture-pointer texture) 'texture)
+            (slot (render-texture-pointer texture) 'depth))))
+
+(define-alien-routine ("_LoadRenderTexture" load-render-texture-raw) (* (struct render-texture-raw))
+  (width int)
+  (height int))
+
+(defun load-render-texture (width height)
+  (let* ((pointer (load-render-texture-raw width height))
+         (texture (@render-texture :pointer pointer)))
+    (tg:finalize texture (lambda () (free-alien pointer)))))
+
+(define-alien-routine ("_UnloadRenderTexture" unload-render-texture-raw) void
+  (target (* (struct render-texture-raw))))
+
+(defun unload-render-texture (texture)
+  (unload-render-texture-raw (render-texture-pointer texture)))
+
+(define-alien-routine ("_IsRenderTextureValid" is-render-texture-valid-raw) (boolean 8)
+  (texture (* (struct render-texture-raw))))
+
+(declaim (ftype (function (render-texture) boolean) is-render-texture-valid))
+(defun is-render-texture-valid (texture)
+  (is-render-texture-valid-raw (render-texture-pointer texture)))
+
+(define-alien-routine ("_BeginTextureMode" begin-texture-mode-raw) void
+  (target (* (struct render-texture-raw))))
+
+(declaim (ftype (function (render-texture)) begin-texture-mode))
+(defun begin-texture-mode (target)
+  (begin-texture-mode-raw (render-texture-pointer target)))
+
+(define-alien-routine ("EndTextureMode" end-texture-mode) void)
+
 ;; --- Fonts --- ;;
 
 (define-alien-type nil
